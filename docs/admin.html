@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>SSP 운영진 화면</title>
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&display=swap">
+<style>
+:root{
+  --page:#f4f5f7; --surface:#ffffff; --sunk:#f7f8fa; --line:#e3e6ea; --line-strong:#cfd4da;
+  --ink:#191f28; --ink2:#4e5968; --ink3:#6b7684; --ink4:#aab1ba;
+  --brand:#bed641; --brand-press:#a9c12f; --brand-soft:#eef5d2; --on-brand:#1b2208;
+  --danger:#d92d3f; --danger-soft:#fdecee; --warn-soft:#fff6e0; --warn-ink:#7a5200;
+  --f:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-num:"Outfit","Pretendard Variable",system-ui,sans-serif;
+  --r:12px; --r-sm:8px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page)}
+body{font-family:var(--f);color:var(--ink);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;word-break:keep-all}
+[hidden]{display:none!important}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--brand-press);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+/* header */
+.bar{background:var(--surface);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.bar img{height:24px}
+.bar .title{font-weight:800;font-size:16px}
+.bar .spacer{flex:1}
+.conn{font-size:13px;color:var(--ink3);display:flex;align-items:center;gap:6px}
+.conn i{width:8px;height:8px;border-radius:50%;background:#2e9e57;display:inline-block}
+.conn.demo i{background:#e0a100}
+.btn{border:1px solid var(--line-strong);background:var(--surface);border-radius:var(--r-sm);padding:9px 14px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;min-height:40px}
+.btn:hover{background:var(--sunk)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--on-brand);font-weight:700}
+.btn.primary:hover{background:var(--brand-press);border-color:var(--brand-press)}
+.btn.danger{background:var(--surface);border-color:#f2b8bf;color:var(--danger)}
+.btn.danger:hover{background:var(--danger-soft)}
+.btn.danger-solid{background:var(--danger);border-color:var(--danger);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.lg{min-height:52px;padding:12px 18px;font-size:16px;border-radius:var(--r)}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr) 1.3fr;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);margin:24px 0 20px}
+.stat{padding:16px 20px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat > span{display:block;font-size:13px;color:var(--ink3);font-weight:500}
+.stat b{display:block;font-family:var(--f-num);font-size:30px;line-height:1.15;font-weight:700;font-variant-numeric:tabular-nums;margin-top:4px}
+.stat b small{font-size:15px;color:var(--ink3);font-weight:600}
+.stat .mode{font-family:var(--f);font-size:17px;font-weight:800;margin-top:8px;display:flex;align-items:center;gap:8px}
+.tag{font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;background:var(--sunk);color:var(--ink2);border:1px solid var(--line)}
+.tag.warn{background:var(--warn-soft);color:var(--warn-ink);border-color:#f0d9a0}
+/* tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:24px;overflow-x:auto}
+.tabs button{border:0;background:none;padding:12px 16px 13px;font-weight:700;font-size:15px;color:var(--ink3);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.tabs button .n{font-family:var(--f-num);font-weight:600;color:var(--ink4);margin-left:4px}
+.panehead h2{font-size:21px;font-weight:800;margin:0 0 4px;letter-spacing:-.01em}
+.panehead p{margin:0 0 20px;color:var(--ink2)}
+/* give pane */
+.give{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.search{display:flex;gap:8px}
+.search input{flex:1;min-width:0;border:2px solid var(--line-strong);border-radius:var(--r);padding:12px 16px;font-family:var(--f-num);font-size:24px;font-weight:600;letter-spacing:.04em;background:var(--surface)}
+.search input:focus{border-color:var(--ink);outline:none}
+.flabel{display:block;font-weight:700;font-size:14px;margin-bottom:8px}
+.hint{font-size:13px;color:var(--ink3);margin:8px 0 0}
+.result{margin-top:24px;border-top:1px solid var(--line);padding-top:24px}
+.who{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.who h3{font-size:26px;margin:0;font-weight:800}
+.who .sid{font-family:var(--f-num);font-size:17px;color:var(--ink2)}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:8px 12px;margin:16px 0 20px;font-size:15px}
+.kv dt{color:var(--ink3)}.kv dd{margin:0;font-weight:600}
+.kv .num{font-family:var(--f-num);font-size:17px;letter-spacing:.08em}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;border-radius:999px;padding:4px 10px}
+.status.paid{background:var(--brand-soft);color:#3d4c0a}
+.status.paid::before{content:"✓"}
+.status.unpaid{background:var(--sunk);color:var(--ink2);border:1px solid var(--line)}
+.choose{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choose .btn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left}
+.choose .btn small{font-weight:500;font-size:13px;opacity:.8}
+.empty{color:var(--ink2);background:var(--sunk);border-radius:var(--r-sm);padding:16px;margin:0}
+.side h3{font-size:15px;margin:0 0 10px;font-weight:800}
+.side ol{margin:0;padding-left:20px;color:var(--ink2);font-size:14px;display:flex;flex-direction:column;gap:8px}
+.side + .side{margin-top:12px}
+/* list pane */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.qlabel{flex:1 1 240px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px}
+.toolbar input{flex:1 1 auto;min-width:0;border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:10px 12px;min-height:40px;background:var(--surface)}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--r-sm);overflow:hidden}
+.seg button{border:0;background:none;padding:9px 14px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink2);min-height:40px}
+.seg button + button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.tablebox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-size:13px;color:var(--ink3);font-weight:600;background:var(--sunk);position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafbfc}
+td.mono{font-family:var(--f-num);font-weight:600}
+td .link{border:0;background:none;color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:4px;font-weight:600}
+.count{font-size:13px;color:var(--ink3);margin:10px 2px 0}
+/* settings */
+.set{display:grid;gap:16px;max-width:720px}
+.set h3{font-size:17px;margin:0 0 4px;font-weight:800}
+.set p.d{margin:0 0 16px;color:var(--ink2);font-size:14px}
+.inline{display:flex;gap:8px;align-items:center}
+.inline input{width:120px;border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:10px 12px;min-height:44px;font-family:var(--f-num);font-size:18px;font-weight:600}
+.radios{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.radio{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;cursor:pointer}
+.radio input{margin:3px 0 0;width:18px;height:18px;accent-color:var(--ink)}
+.radio b{display:block;font-size:15px}.radio small{display:block;color:var(--ink3);font-size:13px}
+.radio:has(input:checked){border-color:var(--ink);background:var(--sunk)}
+.note{background:var(--warn-soft);color:var(--warn-ink);border-radius:var(--r-sm);padding:10px 14px;font-size:14px;margin:0 0 16px}
+.copyrow{display:flex;gap:8px}
+.copyrow input{flex:1;min-width:0;border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:10px 12px;background:var(--sunk);color:var(--ink2)}
+/* lock */
+.lock{max-width:380px;margin:12vh auto 0;padding:0 24px}
+.lock img{height:40px;margin-bottom:24px}
+.lock h1{font-size:24px;font-weight:800;margin:0 0 6px}
+.lock p{color:var(--ink2);margin:0 0 24px}
+.lock input{width:100%;border:2px solid var(--line-strong);border-radius:var(--r);padding:14px 16px;font-size:22px;font-family:var(--f-num);letter-spacing:.3em;margin-bottom:8px;background:var(--surface)}
+.lock input:focus{border-color:var(--ink);outline:none}
+.lock .btn{width:100%;margin-top:8px}
+.err{color:var(--danger);font-size:14px;margin:4px 0 0}
+.err:empty{display:none}
+/* dialog */
+.dim{position:fixed;inset:0;background:rgba(17,20,26,.5);display:grid;place-items:center;padding:20px;z-index:30}
+.dialog{background:var(--surface);border-radius:16px;max-width:420px;width:100%;padding:24px;box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.dialog h2{font-size:19px;margin:0 0 8px;font-weight:800}
+.dialog p{margin:0 0 20px;color:var(--ink2)}
+.dialog .acts{display:flex;gap:8px;justify-content:flex-end}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;font-size:15px;z-index:40;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.demo{background:var(--warn-soft);color:var(--warn-ink);font-size:13px;text-align:center;padding:6px 12px}
+@media (max-width:860px){
+  .wrap{padding:0 16px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2n){border-right:0}
+  .stat{border-bottom:1px solid var(--line)}
+  .stat:last-child{grid-column:1/-1;border-bottom:0}
+  .give{grid-template-columns:minmax(0,1fr)}
+  .search input{width:100%;font-size:20px}
+  .bar .conn span.t{display:none}
+}
+@media (max-width:520px){ .bar .conn{display:none} .bar .wrap{gap:8px}  .choose{grid-template-columns:1fr} .bar .title{display:none} .kv{grid-template-columns:90px 1fr} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="demo" id="demoBar" hidden>체험 모드 · 이 기기에만 저장돼요. config.js 에 구글 API 주소를 넣으면 실제 데이터로 바뀌어요. (체험용 PIN 1119)</div>
+
+<!-- 잠금 화면 -->
+<main class="lock" id="lock">
+  <img src="assets/ssp.png" alt="SSP season2">
+  <h1>운영진 화면</h1>
+  <p>사전신청 명단을 보고 혜택을 지급하는 곳이에요. 운영진 PIN을 넣어주세요.</p>
+  <label class="flabel" for="pin">운영진 PIN</label>
+  <input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="8">
+  <p class="err" id="pinErr" role="alert"></p>
+  <button class="btn primary lg" id="unlock" type="button">열기</button>
+</main>
+
+<!-- 본 화면 -->
+<div id="main" hidden>
+  <header class="bar"><div class="wrap">
+    <img src="assets/ssp.png" alt="SSP season2">
+    <span class="title">운영진 화면</span>
+    <span class="spacer"></span>
+    <span class="conn" id="conn"><i></i><span class="t" id="connText">구글 시트 연결됨</span> · <span id="updated">-</span></span>
+    <button class="btn" id="refresh" type="button">새로고침</button>
+    <button class="btn" id="logout" type="button">잠그기</button>
+  </div></header>
+
+  <div class="wrap">
+    <section class="stats" aria-label="현재 현황">
+      <div class="stat"><span>사전신청</span><b id="s-total">0</b></div>
+      <div class="stat"><span>혜택 받음</span><b id="s-paid">0</b></div>
+      <div class="stat"><span>아직 안 받음</span><b id="s-unpaid">0</b></div>
+      <div class="stat"><span>남은 커피쿠폰</span><b><span id="s-left">0</span><small id="s-limit"> / 0장</small></b></div>
+      <div class="stat"><span>참여자에게 보이는 화면</span><div class="mode"><span id="s-mode">사전신청</span><span class="tag" id="s-modeTag">자동</span></div></div>
+    </section>
+
+    <nav class="tabs" role="tablist" aria-label="메뉴">
+      <button role="tab" type="button" id="t-give" aria-controls="p-give" aria-selected="true">혜택 지급</button>
+      <button role="tab" type="button" id="t-list" aria-controls="p-list" aria-selected="false">신청자 명단<span class="n" id="t-listN">0</span></button>
+      <button role="tab" type="button" id="t-set" aria-controls="p-set" aria-selected="false">설정</button>
+    </nav>
+
+    <!-- 혜택 지급 -->
+    <section id="p-give" role="tabpanel" aria-labelledby="t-give">
+      <div class="panehead"><h2>혜택 지급</h2><p>학번으로 사전신청자를 찾아 혜택을 주거나, 잘못 준 혜택을 취소해요. 번호를 잊은 사람도 여기서 처리해요.</p></div>
+      <div class="give">
+        <div class="panel">
+          <label class="flabel" for="q-sid">학번</label>
+          <form class="search" id="findForm">
+            <input id="q-sid" inputmode="numeric" autocomplete="off" maxlength="10" placeholder="20261234" aria-describedby="q-hint">
+            <button class="btn primary lg" type="submit">찾기</button>
+          </form>
+          <p class="hint" id="q-hint">숫자 8~10자리. 학번을 넣고 Enter를 눌러도 돼요.</p>
+          <div class="result" id="result" hidden aria-live="polite"></div>
+        </div>
+        <aside>
+          <div class="panel side">
+            <h3>참여자 휴대폰으로 줄 때</h3>
+            <ol>
+              <li>참여자가 앱에서 학번·번호를 넣고 '혜택 받기'를 눌러요.</li>
+              <li>화면 아래 '운영진 확인'을 눌러 PIN을 넣어요.</li>
+              <li>커피쿠폰을 고르고 '지급 완료로 표시'를 눌러요.</li>
+              <li>수령자 명단에 서명을 받아요.</li>
+            </ol>
+          </div>
+          <div class="panel side">
+            <h3>커피쿠폰이 다 나가면</h3>
+            <ol style="list-style:disc"><li>커피쿠폰 대신 '럭키드로우 1회 추가'로 지급해요.</li></ol>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 신청자 명단 -->
+    <section id="p-list" role="tabpanel" aria-labelledby="t-list" hidden>
+      <div class="panehead"><h2>신청자 명단</h2><p>사전신청한 사람과 지급 상태를 한 번에 봐요. '지급 화면에서 열기'를 누르면 그 사람을 바로 처리할 수 있어요.</p></div>
+      <div class="toolbar">
+        <label class="qlabel"><span>검색</span><input id="lq" type="search" placeholder="이름 또는 학번"></label>
+        <div class="seg" role="group" aria-label="지급 상태로 거르기">
+          <button type="button" data-f="all" aria-pressed="true">전체 <span id="f-all">0</span></button>
+          <button type="button" data-f="unpaid" aria-pressed="false">아직 안 받음 <span id="f-unpaid">0</span></button>
+          <button type="button" data-f="paid" aria-pressed="false">혜택 받음 <span id="f-paid">0</span></button>
+        </div>
+        <button class="btn" id="csv" type="button">명단 파일 받기 (CSV)</button>
+        <a class="btn" id="sheetLink" href="#" target="_blank" rel="noopener" hidden style="text-decoration:none">구글 시트 열기</a>
+      </div>
+      <div class="tablebox">
+        <table>
+          <thead><tr><th scope="col">이름</th><th scope="col">학번</th><th scope="col">번호</th><th scope="col">신청 시각</th><th scope="col">지급 상태</th><th scope="col">받은 혜택</th><th scope="col">지급 시각</th><th scope="col"><span class="sr">처리</span></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <p class="empty" id="listEmpty" hidden style="margin:16px"></p>
+      </div>
+      <p class="count" id="listCount"></p>
+    </section>
+
+    <!-- 설정 -->
+    <section id="p-set" role="tabpanel" aria-labelledby="t-set" hidden>
+      <div class="panehead"><h2>설정</h2><p>바꾸면 참여자 화면에 바로 반영돼요. 여러 사람이 함께 쓰니 바꾼 뒤 단톡방에 알려주세요.</p></div>
+      <div class="set">
+        <div class="panel">
+          <h3>커피쿠폰 준비 수량</h3>
+          <p class="d">생협에서 산 커피쿠폰 수와 맞춰주세요. 지금까지 <b id="c-used">0</b>장 지급했어요. 이 수량을 넘으면 앱이 자동으로 '럭키드로우 1회 추가'로 바꿔요.</p>
+          <div class="inline"><input id="c-limit" type="number" min="0" max="9999" inputmode="numeric" aria-label="커피쿠폰 준비 수량"><span>장</span><button class="btn primary" id="c-save" type="button">수량 저장</button></div>
+        </div>
+        <div class="panel">
+          <h3>참여자에게 보이는 화면</h3>
+          <p class="d">평소에는 '자동'으로 두세요. 테스트할 때만 잠깐 고정하고, 끝나면 꼭 '자동'으로 돌려놓아요.</p>
+          <div class="radios" role="radiogroup" aria-label="참여자 화면">
+            <label class="radio"><input type="radio" name="mode" value="auto"><span><b>자동 (권장)</b><small>11/18까지 사전신청 화면 → 11/19 당일 화면 → 11/20부터 종료 화면</small></span></label>
+            <label class="radio"><input type="radio" name="mode" value="pre"><span><b>사전신청 화면으로 고정</b><small>신청을 받는 화면. 당일에도 신청을 열어둘 때</small></span></label>
+            <label class="radio"><input type="radio" name="mode" value="day"><span><b>당일 화면으로 고정</b><small>학번·번호로 혜택을 받는 화면. 당일 흐름을 미리 연습할 때</small></span></label>
+            <label class="radio"><input type="radio" name="mode" value="post"><span><b>종료 화면으로 고정</b><small>'와주셔서 고마워요'만 보이는 화면</small></span></label>
+          </div>
+          <button class="btn primary" id="m-save" type="button">화면 바꾸기</button>
+        </div>
+        <div class="panel">
+          <h3>참여자 앱 주소</h3>
+          <p class="d">QR 코드에 넣는 주소예요.</p>
+          <div class="copyrow"><input id="appUrl" readonly aria-label="참여자 앱 주소"><button class="btn" id="copyUrl" type="button">주소 복사</button></div>
+        </div>
+      </div>
+    </section>
+    <div style="height:48px"></div>
+  </div>
+</div>
+
+<div class="dim" id="dlg" hidden>
+  <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="dlgT" aria-describedby="dlgD">
+    <h2 id="dlgT"></h2>
+    <p id="dlgD"></p>
+    <div class="acts"><button class="btn" id="dlgNo" type="button"></button><button class="btn" id="dlgYes" type="button"></button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+<style>.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}</style>
+
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script>
+(() => {
+"use strict";
+const API = window.SSP_API, BEN = API.BENEFIT_LABEL;
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const MODE = { pre: "사전신청", day: "당일", post: "종료" };
+const S = { pin: "", data: null, tab: "give", filter: "all", current: null, busy: false };
+try { S.pin = sessionStorage.getItem("ssp-admin-pin") || ""; } catch (e) {}
+
+async function call(action, p) {
+  const r = await API.call(action, Object.assign({ pin: S.pin }, p || {}));
+  if (!r.ok && r.reason === "pin") { lock("PIN이 바뀌었거나 맞지 않아요. 다시 넣어주세요."); throw new Error("pin"); }
+  return r;
+}
+
+/* ---------- 잠금 ---------- */
+function lock(msg) {
+  S.pin = ""; try { sessionStorage.removeItem("ssp-admin-pin"); } catch (e) {}
+  $("main").hidden = true; $("lock").hidden = false; $("pinErr").textContent = msg || ""; $("pin").value = ""; $("pin").focus();
+}
+async function unlock() {
+  const pin = $("pin").value.trim(); if (pin.length < 4) { $("pinErr").textContent = "PIN은 4자리 이상이에요."; return; }
+  $("unlock").disabled = true; $("pinErr").textContent = "";
+  try {
+    const r = await API.call("adminLogin", { pin });
+    if (!r.ok) { $("pinErr").textContent = "PIN이 맞지 않아요. 단톡방 공지의 PIN을 확인해 주세요."; return; }
+    S.pin = pin; try { sessionStorage.setItem("ssp-admin-pin", pin); } catch (e) {}
+    await enter();
+  } catch (e) { $("pinErr").textContent = "서버에 연결하지 못했어요. 인터넷 연결을 확인하고 다시 눌러주세요."; }
+  finally { $("unlock").disabled = false; }
+}
+async function enter() {
+  $("lock").hidden = true; $("main").hidden = false;
+  await load(); setTab(S.tab); $("q-sid").focus();
+}
+
+/* ---------- 데이터 ---------- */
+async function load() {
+  try {
+    const r = await call("adminData"); if (!r.ok) throw new Error(r.reason);
+    S.data = r; render();
+  } catch (e) { if (e.message !== "pin") toast("새로 불러오지 못했어요. 잠시 뒤 다시 시도해요."); }
+}
+function render() {
+  const d = S.data, st = d.stats, c = d.config;
+  $("s-total").textContent = st.total; $("s-paid").textContent = st.paid; $("s-unpaid").textContent = st.total - st.paid;
+  $("s-left").textContent = st.left; $("s-limit").textContent = ` / ${c.couponLimit}장`;
+  $("s-mode").textContent = MODE[c.mode]; const fixed = c.modeSetting !== "auto";
+  $("s-modeTag").textContent = fixed ? "직접 고정됨" : "자동"; $("s-modeTag").className = "tag" + (fixed ? " warn" : "");
+  $("t-listN").textContent = st.total;
+  $("f-all").textContent = st.total; $("f-paid").textContent = st.paid; $("f-unpaid").textContent = st.total - st.paid;
+  $("c-used").textContent = st.coffee;
+  if (document.activeElement !== $("c-limit")) $("c-limit").value = c.couponLimit;
+  document.querySelectorAll('input[name="mode"]').forEach(i => { if (!S.modeDirty) i.checked = i.value === c.modeSetting; });
+  if (d.sheetUrl) { $("sheetLink").href = d.sheetUrl; $("sheetLink").hidden = false; }
+  const t = new Date(d.updatedAt); $("updated").textContent = `${String(t.getHours()).padStart(2, "0")}:${String(t.getMinutes()).padStart(2, "0")}:${String(t.getSeconds()).padStart(2, "0")} 기준`;
+  drawRows();
+  if (S.current) { const fresh = d.regs.find(r => r.sid === S.current.sid); if (fresh) { S.current = fresh; drawResult(); } }
+}
+
+/* ---------- 탭 ---------- */
+function setTab(t) {
+  S.tab = t;
+  ["give", "list", "set"].forEach(k => { $("t-" + k).setAttribute("aria-selected", String(k === t)); $("p-" + k).hidden = k !== t; });
+}
+
+/* ---------- 혜택 지급 ---------- */
+async function find(sid) {
+  sid = String(sid || "").replace(/\D/g, "");
+  const box = $("result"); box.hidden = false;
+  if (!/^\d{8,10}$/.test(sid)) { box.innerHTML = `<p class="empty">학번은 숫자 8~10자리예요. 다시 확인해 주세요.</p>`; S.current = null; return; }
+  box.innerHTML = `<p class="hint">찾는 중…</p>`;
+  try {
+    const r = await call("adminFind", { sid });
+    if (!r.ok) { S.current = null; box.innerHTML = `<p class="empty"><b>${esc(sid)}</b>로 사전신청한 사람이 없어요. 사전신청을 안 했다면 혜택 없이 일반 참여로 안내해 주세요.</p>`; return; }
+    S.current = r.reg; if (S.data) S.data.stats.left = r.left; drawResult();
+  } catch (e) { if (e.message !== "pin") box.innerHTML = `<p class="empty">찾지 못했어요. 인터넷 연결을 확인하고 다시 눌러주세요.</p>`; }
+}
+function drawResult() {
+  const r = S.current, left = S.data ? S.data.stats.left : 0, box = $("result");
+  const head = `<div class="who"><h3>${esc(r.name)}</h3><span class="sid">${esc(r.sid)}</span><span class="status ${r.redeemed ? "paid" : "unpaid"}">${r.redeemed ? "혜택 받음" : "아직 안 받음"}</span></div>`;
+  const kv = `<dl class="kv"><dt>4자리 번호</dt><dd class="num">${esc(r.code)}</dd><dt>신청 시각</dt><dd>${esc(r.createdAt)}</dd>${r.redeemed ? `<dt>받은 혜택</dt><dd>${esc(BEN[r.benefit] || "-")}</dd><dt>지급 시각</dt><dd>${esc(r.redeemedAt)}</dd><dt>지급 방법</dt><dd>${esc(r.via || "-")}</dd>` : ""}${r.memo ? `<dt>메모</dt><dd>${esc(r.memo)}</dd>` : ""}</dl>`;
+  const acts = r.redeemed
+    ? `<button class="btn danger" type="button" id="undo">지급 취소</button><p class="hint">잘못 눌렀을 때만 써요. '아직 안 받음'으로 돌아가고, 취소 기록은 시트 메모에 남아요.</p>`
+    : `<div class="choose">
+         <button class="btn primary lg" type="button" data-give="coffee" ${left > 0 ? "" : "disabled"}>커피쿠폰 지급<small>${left > 0 ? `남은 ${left}장` : "다 나갔어요"}</small></button>
+         <button class="btn lg" type="button" data-give="lucky">럭키드로우 1회 추가 지급<small>커피쿠폰이 다 나갔을 때</small></button>
+       </div>`;
+  box.innerHTML = head + kv + acts;
+  box.querySelectorAll("[data-give]").forEach(b => b.addEventListener("click", () => give(b.dataset.give, b)));
+  const u = $("undo"); if (u) u.addEventListener("click", askUndo);
+}
+async function give(benefit, btn) {
+  const r0 = S.current; btn.disabled = true;
+  try {
+    const r = await call("adminRedeem", { sid: r0.sid, benefit });
+    if (!r.ok) {
+      const msg = { used: "이미 혜택을 받은 사람이에요.", soldout: "커피쿠폰이 다 나갔어요. 럭키드로우 1회 추가로 지급해 주세요.", not_found: "신청 정보를 찾지 못했어요." }[r.reason] || "처리하지 못했어요. 다시 눌러주세요.";
+      toast(msg); await load(); if (r.reg) { S.current = r.reg; drawResult(); } else btn.disabled = false; return;
+    }
+    S.current = r.reg; toast(`${r.reg.name} 님 · ${BEN[benefit]} 지급 완료. 명단에 서명을 받아주세요.`); await load(); drawResult();
+  } catch (e) { if (e.message !== "pin") { toast("처리하지 못했어요. 다시 눌러주세요."); btn.disabled = false; } }
+}
+function askUndo() {
+  const r = S.current;
+  confirmDialog({
+    title: `${r.name} 님의 지급을 취소할까요?`,
+    desc: `${r.sid} · ${BEN[r.benefit] || ""} 지급 기록이 '아직 안 받음'으로 돌아가요. 이미 건넨 쿠폰은 직접 돌려받아 주세요.`,
+    yes: "지급 취소하기", no: "그대로 두기", danger: true,
+    onYes: async () => {
+      try { const x = await call("adminUndo", { sid: r.sid }); if (x.ok) { S.current = x.reg; toast(`${r.name} 님 지급을 취소했어요.`); await load(); drawResult(); } else toast("취소하지 못했어요. 다시 눌러주세요."); }
+      catch (e) { if (e.message !== "pin") toast("취소하지 못했어요. 다시 눌러주세요."); }
+    }
+  });
+}
+
+/* ---------- 명단 ---------- */
+function listFiltered() {
+  const q = $("lq").value.trim(); const f = S.filter;
+  return (S.data ? S.data.regs : []).filter(r => (!q || r.name.includes(q) || r.sid.includes(q)) && (f === "all" || (f === "paid") === r.redeemed))
+    .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+}
+function drawRows() {
+  const list = listFiltered(), tb = $("rows");
+  tb.innerHTML = list.map(r => `<tr><td>${esc(r.name)}</td><td class="mono">${esc(r.sid)}</td><td class="mono">${esc(r.code)}</td><td>${esc(r.createdAt)}</td><td><span class="status ${r.redeemed ? "paid" : "unpaid"}">${r.redeemed ? "혜택 받음" : "아직 안 받음"}</span></td><td>${esc(BEN[r.benefit] || "-")}</td><td>${esc(r.redeemedAt || "-")}</td><td><button class="link" type="button" data-open="${esc(r.sid)}">지급 화면에서 열기</button></td></tr>`).join("");
+  tb.querySelectorAll("[data-open]").forEach(b => b.addEventListener("click", () => { setTab("give"); $("q-sid").value = b.dataset.open; find(b.dataset.open); }));
+  const total = S.data ? S.data.regs.length : 0;
+  $("listEmpty").hidden = list.length > 0;
+  $("listEmpty").textContent = total === 0 ? "아직 사전신청한 사람이 없어요. 용두리 홍보(11/12)부터 신청이 들어오면 여기에 바로 보여요." : "조건에 맞는 사람이 없어요. 검색어나 지급 상태 필터를 바꿔보세요.";
+  $("listCount").textContent = total ? `${list.length}명 표시 중 (전체 ${total}명)` : "";
+}
+function downloadCsv() {
+  const regs = (S.data ? S.data.regs : []).slice().sort((a, b) => String(a.createdAt).localeCompare(String(b.createdAt)));
+  if (!regs.length) { toast("아직 받을 명단이 없어요."); return; }
+  const head = ["번호", "이름", "학번", "신청 시각", "지급 상태", "받은 혜택", "지급 시각", "지급 방법", "서명"];
+  const q = v => `"${String(v == null ? "" : v).replace(/"/g, '""')}"`;
+  const lines = [head.map(q).join(",")].concat(regs.map((r, i) => [i + 1, r.name, "\t" + r.sid, r.createdAt, r.redeemed ? "혜택 받음" : "아직 안 받음", BEN[r.benefit] || "", r.redeemedAt || "", r.via || "", ""].map(q).join(",")));
+  const blob = new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const d = new Date(), p = n => String(n).padStart(2, "0");
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `SSP_season2_수령자명단_${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  toast(`명단 ${regs.length}명을 파일로 받았어요.`);
+}
+
+/* ---------- 설정 ---------- */
+async function saveLimit() {
+  const n = parseInt($("c-limit").value, 10);
+  if (isNaN(n) || n < 0) { toast("0 이상의 숫자를 넣어주세요."); return; }
+  try { const r = await call("adminSetConfig", { couponLimit: n }); if (r.ok) { S.data = r; render(); toast(`커피쿠폰 준비 수량을 ${n}장으로 저장했어요.`); } else toast("저장하지 못했어요."); }
+  catch (e) { if (e.message !== "pin") toast("저장하지 못했어요. 다시 눌러주세요."); }
+}
+function askMode() {
+  const sel = document.querySelector('input[name="mode"]:checked'); if (!sel) return;
+  const v = sel.value, label = sel.closest("label").querySelector("b").textContent;
+  if (S.data && v === S.data.config.modeSetting) { toast("이미 그 화면이에요."); return; }
+  confirmDialog({
+    title: `참여자 화면을 '${label}'(으)로 바꿀까요?`,
+    desc: v === "auto" ? "날짜에 맞는 화면으로 바로 돌아가요." : "지금 앱을 여는 모든 참여자에게 바로 이 화면이 보여요. 테스트가 끝나면 '자동'으로 돌려놓아 주세요.",
+    yes: "화면 바꾸기", no: "그대로 두기",
+    onYes: async () => {
+      try { const r = await call("adminSetConfig", { mode: v }); if (r.ok) { S.modeDirty = false; S.data = r; render(); toast(`참여자 화면을 '${label}'(으)로 바꿨어요.`); } }
+      catch (e) { if (e.message !== "pin") toast("바꾸지 못했어요. 다시 눌러주세요."); }
+    }
+  });
+}
+
+/* ---------- 확인 창 ---------- */
+let dlgFocus = null, dlgYes = null;
+function confirmDialog(o) {
+  dlgFocus = document.activeElement; dlgYes = o.onYes;
+  $("dlgT").textContent = o.title; $("dlgD").textContent = o.desc;
+  $("dlgYes").textContent = o.yes; $("dlgNo").textContent = o.no;
+  $("dlgYes").className = "btn " + (o.danger ? "danger-solid" : "primary");
+  $("dlg").hidden = false; $("dlgNo").focus();
+}
+function closeDialog() { $("dlg").hidden = true; if (dlgFocus) dlgFocus.focus(); }
+
+let tt; function toast(m) { const t = $("toast"); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 3200); }
+
+/* ---------- 연결 ---------- */
+function bind() {
+  $("unlock").addEventListener("click", unlock);
+  $("pin").addEventListener("keydown", e => { if (e.key === "Enter") unlock(); });
+  $("logout").addEventListener("click", () => lock("잠갔어요. 다시 쓰려면 PIN을 넣어주세요."));
+  $("refresh").addEventListener("click", async () => { await load(); toast("최신 내용으로 바꿨어요."); });
+  ["give", "list", "set"].forEach(k => $("t-" + k).addEventListener("click", () => setTab(k)));
+  $("findForm").addEventListener("submit", e => { e.preventDefault(); find($("q-sid").value); });
+  $("q-sid").addEventListener("input", e => e.target.value = e.target.value.replace(/\D/g, ""));
+  $("lq").addEventListener("input", drawRows);
+  document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
+    S.filter = b.dataset.f; document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); drawRows();
+  }));
+  $("csv").addEventListener("click", downloadCsv);
+  $("c-save").addEventListener("click", saveLimit);
+  document.querySelectorAll('input[name="mode"]').forEach(i => i.addEventListener("change", () => S.modeDirty = true));
+  $("m-save").addEventListener("click", askMode);
+  $("copyUrl").addEventListener("click", async () => { try { await navigator.clipboard.writeText($("appUrl").value); toast("주소를 복사했어요."); } catch (e) { $("appUrl").select(); toast("주소를 선택했어요. 길게 눌러 복사해 주세요."); } });
+  $("dlgNo").addEventListener("click", closeDialog);
+  $("dlgYes").addEventListener("click", async () => { const f = dlgYes; closeDialog(); if (f) await f(); });
+  $("dlg").addEventListener("click", e => { if (e.target === $("dlg")) closeDialog(); });
+  document.addEventListener("keydown", e => {
+    if ($("dlg").hidden) return;
+    if (e.key === "Escape") closeDialog();
+    if (e.key === "Tab") { const a = [$("dlgNo"), $("dlgYes")]; const i = a.indexOf(document.activeElement); e.preventDefault(); a[(i + (e.shiftKey ? 1 : 1)) % 2].focus(); }
+  });
+  // 탭 방향키 이동
+  document.querySelector(".tabs").addEventListener("keydown", e => {
+    const ks = ["give", "list", "set"]; const i = ks.indexOf(S.tab);
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const n = ks[(i + (e.key === "ArrowRight" ? 1 : 2)) % 3]; setTab(n); $("t-" + n).focus(); }
+  });
+}
+
+bind();
+$("appUrl").value = new URL("./", location.href).href;
+$("demoBar").hidden = !API.demo;
+if (API.demo) { $("conn").classList.add("demo"); $("connText").textContent = "체험 모드"; }
+if (S.pin) enter(); else { $("lock").hidden = false; $("pin").focus(); }
+setInterval(() => { if (S.pin && !$("main").hidden && document.visibilityState === "visible") load(); }, 20000);
+})();
+</script>
+</body>
+</html>

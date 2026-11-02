@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#bed641">
+<title>SSP season2 사전신청</title>
+<meta name="description" content="11월 19일 국민대 본부관 1층 로비, 사과대 8개 전공 전공소개설명회 SSP season2 사전신청">
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&display=swap">
+<style>
+:root{
+  --brand:#bed641; --brand-press:#a9c12f; --brand-soft:#f3f8dc; --on-brand:#1b2208;
+  --bg:#ffffff; --bg2:#f2f4f6; --card:#f7f8fa; --line:#e5e8eb;
+  --t1:#191f28; --t2:#4e5968; --t3:#6b7684; --t4:#adb5bd;
+  --danger:#e5384a; --logo:none;
+  --f-body:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-num:"Outfit","Pretendard Variable",system-ui,sans-serif;
+  --r-lg:20px; --r-md:14px; --r-sm:10px;
+}
+@media (prefers-color-scheme:dark){:root{
+  --brand:#bed641; --brand-press:#cfe35e; --brand-soft:#262c11; --on-brand:#1b2208;
+  --bg:#141418; --bg2:#202027; --card:#1c1c22; --line:#2d2d35;
+  --t1:#f2f3f5; --t2:#c3c8cf; --t3:#9aa1ab; --t4:#5b616b; --danger:#ff6b76; --logo:invert(1); color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{color:var(--t1);font-family:var(--f-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:anywhere}
+.app{max-width:480px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:0 20px 132px}
+.top{display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
+.top img{height:26px;width:auto;filter:var(--logo)}
+.back{border:0;background:none;color:var(--t1);font:inherit;font-size:15px;padding:10px 10px 10px 0;cursor:pointer}
+.chip{font-size:12px;font-weight:700;color:var(--t2);background:var(--bg2);border-radius:999px;padding:5px 10px;white-space:nowrap}
+.chip.live{background:var(--brand);color:var(--on-brand)}
+h1{font-size:27px;line-height:1.33;font-weight:800;letter-spacing:-.025em;margin:20px 0 8px;text-wrap:balance}
+.sub{color:var(--t2);font-size:16px;margin:0 0 24px}
+.muted{color:var(--t3);font-size:14px}
+section{display:flex;flex-direction:column}
+[hidden]{display:none!important}
+/* countdown */
+.cdlabel{font-size:14px;font-weight:600;color:var(--t2);margin:4px 0 8px}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 24px}
+.cell{background:var(--card);border-radius:var(--r-md);padding:16px 4px 12px;text-align:center}
+.cell b{display:block;font-family:var(--f-num);font-size:34px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.cell span{display:block;font-size:12px;color:var(--t3);margin-top:8px}
+.cell.hl{background:var(--brand)}.cell.hl b,.cell.hl span{color:var(--on-brand)}
+/* rows */
+.rows{margin:0;background:var(--card);border-radius:var(--r-lg);padding:4px 18px}
+.row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.row:last-child{border-bottom:0}
+.row dt{color:var(--t3);flex:none}.row dd{margin:0;text-align:right;font-weight:600;min-width:0}
+.steps{list-style:none;padding:0;display:flex;flex-direction:column;gap:18px;margin:28px 0 8px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step i{flex:none;width:26px;height:26px;border-radius:50%;background:var(--bg2);color:var(--t2);font-style:normal;font-weight:700;font-size:13px;display:grid;place-items:center;font-family:var(--f-num)}
+.step p{margin:2px 0 0;font-size:15px;color:var(--t2)}.step strong{color:var(--t1);display:block;font-size:16px}
+/* form */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:22px}
+.field label,.lbl{font-size:14px;color:var(--t3);font-weight:600}
+.field input{border:0;border-bottom:2px solid var(--line);background:transparent;color:var(--t1);font:inherit;font-size:24px;font-weight:700;padding:8px 0;outline:none;border-radius:0;width:100%}
+.field input:focus{border-color:var(--brand-press)}
+.field input[aria-invalid="true"]{border-color:var(--danger)}
+.field input::placeholder{color:var(--t4);font-weight:500}
+.err{color:var(--danger);font-size:14px;margin:-12px 0 12px;min-height:0}
+.err:empty{display:none}
+.progress{height:4px;background:var(--bg2);border-radius:4px;overflow:hidden;margin-top:4px}
+.progress div{height:100%;width:100%;background:var(--brand);transform-origin:left;transform:scaleX(.25);transition:transform .25s ease-out}
+.check{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:var(--r-md);background:var(--card);cursor:pointer;margin-bottom:10px}
+.check input{width:22px;height:22px;accent-color:var(--brand-press);flex:none;margin:1px 0 0}
+.check span{font-size:15px;font-weight:600}.check small{display:block;color:var(--t3);font-size:13px;font-weight:400;margin-top:2px}
+.terms{font-size:14px;color:var(--t2);background:var(--card);border-radius:var(--r-md);padding:14px 16px;margin:0 0 12px;line-height:1.7}
+.terms b{color:var(--t1)}
+.linkbtn{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;border-radius:var(--r-md);border:1px solid var(--line);color:var(--t1);text-decoration:none;margin-bottom:12px;font-weight:600}
+.linkbtn em{font-style:normal;color:var(--t3);font-size:14px;font-weight:500}
+/* code */
+.code{display:flex;gap:10px;justify-content:center;margin:12px 0 8px}
+.code b{width:62px;height:76px;border-radius:16px;background:var(--brand);color:var(--on-brand);display:grid;place-items:center;font-family:var(--f-num);font-size:40px;font-weight:800}
+.codein{display:flex;gap:10px;margin:8px 0 22px}
+.codein input{width:58px;height:66px;text-align:center;font-family:var(--f-num);font-size:30px;font-weight:800;border:2px solid var(--line);border-radius:14px;background:var(--card);color:var(--t1);outline:none}
+.codein input:focus{border-color:var(--brand-press)}
+/* tabs */
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg2);border-radius:12px;padding:4px;margin:4px 0 24px}
+.tabs button{border:0;background:none;font:inherit;font-size:15px;font-weight:700;color:var(--t3);padding:11px 0;border-radius:9px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--bg);color:var(--t1);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.found{background:var(--card);border-radius:var(--r-lg);padding:20px;text-align:center;margin-bottom:12px}
+.found .code{margin:10px 0 4px}
+/* ticket */
+.ticket{border-radius:24px;background:var(--brand);color:var(--on-brand);padding:22px 22px 18px;position:relative;overflow:hidden}
+.ticket .tname{font-size:24px;font-weight:800;margin:6px 0 2px}
+.ticket .tsid{font-family:var(--f-num);font-size:15px;opacity:.75}
+.ticket .tben{margin-top:22px;padding-top:16px;border-top:1.5px dashed rgba(27,34,8,.35);font-size:15px}
+.ticket .tben strong{display:block;font-size:20px;margin-top:2px}
+.ticket .stamp{position:absolute;right:18px;top:18px;font-size:12px;font-weight:800;border:2px solid currentColor;border-radius:999px;padding:4px 10px}
+.ticket.used{background:var(--bg2);color:var(--t2)}
+.ticket.used .tben{border-color:var(--line)}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:6px;animation:pl 1.4s infinite}
+@keyframes pl{50%{opacity:.25}}
+/* bottom buttons */
+.cta{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(to top,var(--bg) 72%,transparent);padding:20px 20px calc(16px + env(safe-area-inset-bottom,0px));z-index:5}
+.cta .in{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.btn{appearance:none;border:0;border-radius:16px;font:inherit;font-weight:700;font-size:17px;padding:17px 16px;width:100%;cursor:pointer;transition:transform .08s ease-out,background-color .15s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--brand);color:var(--on-brand)}
+.btn.primary:hover{background:var(--brand-press)}
+.btn.primary:disabled{background:var(--bg2);color:var(--t4);cursor:default;transform:none}
+.btn.ghost{background:var(--bg2);color:var(--t2)}
+.btn.text{background:none;color:var(--t3);font-weight:600;font-size:15px;padding:10px}
+.btn:focus-visible,.back:focus-visible,a:focus-visible,.tabs button:focus-visible,.opt:focus-visible{outline:3px solid var(--brand-press);outline-offset:2px}
+.banner{font-size:13px;color:var(--t2);background:var(--bg2);border-radius:12px;padding:10px 14px;margin-top:20px}
+/* footer: 주최·주관 */
+.org{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);display:flex;gap:14px;align-items:center}
+.org img{width:58px;height:auto;flex:none;filter:var(--logo)}
+.org dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:13px}
+.org dt{color:var(--t3)}.org dd{margin:0;color:var(--t2);font-weight:600}
+/* staff sheet */
+.dim{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet{background:var(--bg);width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom,0px));animation:up .2s ease-out}
+@keyframes up{from{transform:translateY(32px);opacity:.5}}
+.sheet h2{font-size:21px;margin:0 0 6px;font-weight:800}
+.pin{width:100%;border:1px solid var(--line);border-radius:12px;padding:13px 14px;font:inherit;font-size:17px;background:var(--bg);color:var(--t1);margin-top:14px}
+.opts{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 16px;border-radius:var(--r-md);border:2px solid var(--line);background:var(--bg);color:var(--t1);font:inherit;font-weight:700;cursor:pointer;text-align:left}
+.opt small{font-weight:500;color:var(--t3)}
+.opt[aria-pressed="true"]{border-color:var(--brand-press);background:var(--brand-soft)}
+.opt:disabled{opacity:.45;cursor:default}
+.toast{position:fixed;left:50%;bottom:112px;transform:translateX(-50%);background:var(--t1);color:var(--bg);padding:12px 18px;border-radius:12px;font-size:15px;z-index:20;max-width:calc(100% - 40px)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <button class="back" id="back" hidden type="button">‹ 이전</button>
+    <img id="logo" alt="SSP season2" src="assets/ssp.png">
+    <span class="chip" id="modeChip">사전신청 중</span>
+  </header>
+
+  <!-- 사전신청 기간 홈 -->
+  <section data-s="home-pre" hidden>
+    <h1>사과대 8개 전공,<br>궁금한 건 다 물어보는 날</h1>
+    <p class="sub">전공 선배와 교수님이 부스에서 기다려요. 미리 신청하면 커피쿠폰을 드려요.</p>
+    <p class="cdlabel">SSP season2까지 남은 시간</p>
+    <div class="count" aria-label="행사까지 남은 시간">
+      <div class="cell hl"><b id="cd-d">0</b><span>일</span></div>
+      <div class="cell"><b id="cd-h">00</b><span>시간</span></div>
+      <div class="cell"><b id="cd-m">00</b><span>분</span></div>
+      <div class="cell"><b id="cd-s">00</b><span>초</span></div>
+    </div>
+    <dl class="rows">
+      <div class="row"><dt>시간</dt><dd>11월 19일 (목) 10:00~17:00</dd></div>
+      <div class="row"><dt>장소</dt><dd>본부관 1층 로비</dd></div>
+      <div class="row"><dt>사전신청 혜택</dt><dd>커피쿠폰 (선착순)</dd></div>
+    </dl>
+    <ol class="steps">
+      <li class="step"><i>1</i><div><strong>지금 사전신청</strong><p>이름·학번을 남기고 SPOT 인스타를 팔로우해요.</p></div></li>
+      <li class="step"><i>2</i><div><strong>4자리 번호 받기</strong><p>화면을 캡처해 두세요. 당일에 필요해요.</p></div></li>
+      <li class="step"><i>3</i><div><strong>11/19 SSP에서 사전신청 혜택 받기</strong><p>번호를 넣고 운영부스에서 혜택을 받아요.</p></div></li>
+    </ol>
+    <div class="org">
+      <img src="assets/spot.png" alt="SPOT 로고">
+      <dl>
+        <dt>주최·주관</dt><dd>국민대학교 사회과학대학</dd>
+        <dt></dt><dd>사회과학대학 홍보단 SPOT</dd>
+        <dt>문의</dt><dd>인스타그램 @kmu_s.pot</dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 사전신청 단계 -->
+  <section data-s="apply" hidden>
+    <div class="progress" role="progressbar" aria-label="사전신청 진행" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" id="progbar"><div id="prog"></div></div>
+    <div data-step="1">
+      <h1>이름을 알려주세요</h1>
+      <p class="sub">당일 혜택 받을 때 본인 확인에 써요.</p>
+      <div class="field"><label for="in-name">이름</label><input id="in-name" autocomplete="name" placeholder="홍길동" maxlength="20"></div>
+    </div>
+    <div data-step="2" hidden>
+      <h1>학번을 알려주세요</h1>
+      <p class="sub">한 학번당 한 번만 신청할 수 있어요.</p>
+      <div class="field"><label for="in-sid">학번</label><input id="in-sid" inputmode="numeric" autocomplete="off" placeholder="20261234" maxlength="10" aria-describedby="err-sid"></div>
+      <p class="err" id="err-sid" role="alert"></p>
+    </div>
+    <div data-step="3" hidden>
+      <h1>SPOT 인스타를<br>팔로우해 주세요</h1>
+      <p class="sub">행사 소식과 당첨 발표가 여기 올라와요.</p>
+      <a class="linkbtn" href="https://www.instagram.com/kmu_s.pot/" target="_blank" rel="noopener"><span>@kmu_s.pot 열기</span><em>인스타그램 ›</em></a>
+      <label class="check"><input type="checkbox" id="in-follow"><span>팔로우했어요<small>운영부스에서 팔로우 화면을 확인할 수 있어요</small></span></label>
+    </div>
+    <div data-step="4" hidden>
+      <h1>개인정보 수집에<br>동의해 주세요</h1>
+      <p class="sub">혜택 지급과 수령자 명단 작성에만 써요.</p>
+      <div class="terms"><b>수집 항목</b> 이름, 학번<br><b>목적</b> 사전신청 확인, 혜택 지급, 수령자 명단(결과보고)<br><b>보관</b> 결과보고가 끝나면 파기 (2026년 11월 30일까지)<br>동의하지 않으면 사전신청을 할 수 없어요.</div>
+      <label class="check"><input type="checkbox" id="in-agree"><span>위 내용에 동의해요 (필수)</span></label>
+      <p class="err" id="err-apply" role="alert"></p>
+    </div>
+  </section>
+
+  <!-- 신청 완료 -->
+  <section data-s="done" hidden>
+    <h1>신청 완료!<br>이 번호를 기억해 주세요</h1>
+    <p class="sub">11월 19일 SSP에서 이 번호로 사전신청 혜택을 받아요.</p>
+    <div class="code" id="doneCode" aria-label="나의 4자리 번호"></div>
+    <p class="muted" style="text-align:center;margin:4px 0 28px">지금 화면을 캡처해 두세요</p>
+    <dl class="rows">
+      <div class="row"><dt>이름</dt><dd id="doneName"></dd></div>
+      <div class="row"><dt>학번</dt><dd id="doneSid"></dd></div>
+      <div class="row"><dt>받을 혜택</dt><dd>커피쿠폰 (선착순)</dd></div>
+    </dl>
+  </section>
+
+  <!-- 행사 당일 홈 -->
+  <section data-s="home-day" hidden>
+    <h1>지금 본부관 1층 로비에서<br>SSP season2 진행 중</h1>
+    <div class="tabs" role="tablist" aria-label="당일 메뉴">
+      <button type="button" role="tab" id="tab-get" aria-selected="true" aria-controls="pane-get">혜택 받기</button>
+      <button type="button" role="tab" id="tab-find" aria-selected="false" aria-controls="pane-find">내 번호 다시 보기</button>
+    </div>
+    <div id="pane-get" role="tabpanel" aria-labelledby="tab-get">
+      <p class="sub" style="margin-top:-8px">사전신청한 학번과 4자리 번호를 넣어주세요.</p>
+      <div class="field"><label for="dv-sid">학번</label><input id="dv-sid" inputmode="numeric" autocomplete="off" placeholder="20261234" maxlength="10"></div>
+      <span class="lbl" id="dv-lbl">4자리 번호</span>
+      <div class="codein" role="group" aria-labelledby="dv-lbl">
+        <input inputmode="numeric" maxlength="1" aria-label="번호 1번째 자리" id="dc0"><input inputmode="numeric" maxlength="1" aria-label="번호 2번째 자리" id="dc1"><input inputmode="numeric" maxlength="1" aria-label="번호 3번째 자리" id="dc2"><input inputmode="numeric" maxlength="1" aria-label="번호 4번째 자리" id="dc3">
+      </div>
+      <p class="err" id="err-dv" role="alert"></p>
+      <dl class="rows">
+        <div class="row"><dt>운영 시간</dt><dd>10:00~17:00</dd></div>
+        <div class="row"><dt>혜택 받는 곳</dt><dd>본부관 1층 로비 운영부스</dd></div>
+        <div class="row"><dt>남은 커피쿠폰</dt><dd id="dayLeft">-</dd></div>
+      </dl>
+    </div>
+    <div id="pane-find" role="tabpanel" aria-labelledby="tab-find" hidden>
+      <p class="sub" style="margin-top:-8px">신청할 때 쓴 이름과 학번을 넣으면 번호를 다시 보여드려요.</p>
+      <div id="findForm">
+        <div class="field"><label for="lk-name">이름</label><input id="lk-name" autocomplete="name" placeholder="홍길동" maxlength="20"></div>
+        <div class="field"><label for="lk-sid">학번</label><input id="lk-sid" inputmode="numeric" autocomplete="off" placeholder="20261234" maxlength="10"></div>
+        <p class="err" id="err-lk" role="alert"></p>
+      </div>
+      <div id="findResult" hidden>
+        <div class="found">
+          <p class="muted" style="margin:0" id="fdName"></p>
+          <div class="code" id="fdCode" aria-label="나의 4자리 번호"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 티켓 -->
+  <section data-s="ticket" hidden>
+    <h1 id="tkTitle">운영부스에서<br>이 화면을 보여주세요</h1>
+    <p class="sub" id="tkSub">운영진이 확인하면 혜택을 드려요.</p>
+    <div class="ticket" id="ticket">
+      <span class="stamp" id="tkStamp"></span>
+      <div style="font-size:13px;font-weight:700">SSP season2 · 11.19</div>
+      <div class="tname" id="tkName"></div>
+      <div class="tsid" id="tkSid"></div>
+      <div class="tben"><span id="tkBenLabel">받을 혜택</span><strong id="tkBen"></strong></div>
+    </div>
+    <p class="muted" style="margin-top:14px">혜택은 한 번만 받을 수 있어요. 받은 혜택은 수령자 명단에 서명으로 남겨요.</p>
+  </section>
+
+  <!-- 종료 -->
+  <section data-s="post" hidden>
+    <h1>SSP season2가<br>끝났어요</h1>
+    <p class="sub">와주셔서 고마워요.</p>
+    <a class="linkbtn" href="https://www.instagram.com/kmu_s.pot/" target="_blank" rel="noopener"><span>@kmu_s.pot</span><em>인스타그램 ›</em></a>
+  </section>
+
+  <p class="banner" id="demoBanner" hidden>체험 모드예요. 신청 내용이 이 기기에만 저장돼요.</p>
+</div>
+
+<div class="cta" id="cta"><div class="in">
+  <button class="btn primary" id="btnMain" type="button">사전신청하기</button>
+  <button class="btn text" id="btnSub" type="button" hidden></button>
+</div></div>
+
+<div class="dim" id="sheet" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+    <h2 id="shTitle">운영진 확인</h2>
+    <p class="muted" style="margin:0">운영진 PIN을 넣고 줄 혜택을 고르세요.</p>
+    <input id="sh-pin" class="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="운영진 PIN" maxlength="8" aria-label="운영진 PIN">
+    <div class="opts">
+      <button class="opt" type="button" data-b="coffee" aria-pressed="false">커피쿠폰<small id="shLeft"></small></button>
+      <button class="opt" type="button" data-b="lucky" aria-pressed="false">럭키드로우 1회 추가<small>커피쿠폰이 다 나갔을 때</small></button>
+    </div>
+    <p class="err" id="err-sh" role="alert" style="margin:0 0 10px"></p>
+    <div style="display:flex;gap:8px"><button class="btn ghost" id="shCancel" type="button">닫기</button><button class="btn primary" id="shOk" type="button" disabled>지급 완료로 표시</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="config.js"></script>
+<script src="api.js"></script>
+<script>
+(() => {
+"use strict";
+const API = window.SSP_API;
+const EVENT_START = new Date("2026-11-19T10:00:00+09:00");
+const BEN = API.BENEFIT_LABEL;
+const $ = id => document.getElementById(id);
+const clean = s => String(s || "").trim();
+const validSid = s => /^\d{8,10}$/.test(s);
+const state = { screen: "", step: 1, mode: "pre", left: null, ticket: null, pick: null, busy: false, dayTab: "get", found: null };
+
+/* ---------- 화면 전환 ---------- */
+function show(s) {
+  state.screen = s;
+  document.querySelectorAll("[data-s]").forEach(el => el.hidden = el.dataset.s !== s);
+  const sub = ["apply", "ticket", "done"].includes(s);
+  $("back").hidden = !sub; $("logo").hidden = sub;
+  renderCta(); window.scrollTo(0, 0);
+}
+function home() {
+  const chip = $("modeChip");
+  chip.textContent = { pre: "사전신청 중", day: "오늘 진행 중", post: "행사 종료" }[state.mode];
+  chip.classList.toggle("live", state.mode === "day");
+  show({ pre: "home-pre", day: "home-day", post: "post" }[state.mode]);
+}
+const isHome = () => ["home-pre", "home-day", "post"].includes(state.screen);
+
+function renderCta() {
+  const m = $("btnMain"), sub = $("btnSub"), cta = $("cta");
+  sub.hidden = true; cta.hidden = false; m.disabled = state.busy;
+  switch (state.screen) {
+    case "home-pre": m.textContent = "사전신청하기"; break;
+    case "apply":
+      m.textContent = state.busy ? (state.step === 2 ? "학번 확인 중…" : "신청하는 중…") : (state.step < 4 ? "다음" : "신청하고 번호 받기");
+      m.disabled = state.busy || !stepValid(); break;
+    case "done": m.textContent = "확인했어요"; break;
+    case "home-day":
+      if (state.dayTab === "get") {
+        m.textContent = state.busy ? "확인 중…" : "혜택 받기";
+        m.disabled = state.busy || !(validSid(clean($("dv-sid").value)) && dayCode().length === 4);
+      } else if (state.found) {
+        m.textContent = "이 번호로 혜택 받기"; sub.hidden = false; sub.textContent = "다른 학번 찾기";
+      } else {
+        m.textContent = state.busy ? "찾는 중…" : "내 번호 보기";
+        m.disabled = state.busy || !(clean($("lk-name").value).length >= 2 && validSid(clean($("lk-sid").value)));
+      }
+      break;
+    case "ticket": m.textContent = state.ticket && state.ticket.redeemed ? "처음으로" : "운영진 확인 (운영진만)"; break;
+    default: cta.hidden = true;
+  }
+}
+
+/* ---------- 사전신청 ---------- */
+function stepValid() {
+  if (state.step === 1) return clean($("in-name").value).length >= 2;
+  if (state.step === 2) return validSid(clean($("in-sid").value)) && !$("err-sid").textContent;
+  if (state.step === 3) return $("in-follow").checked;
+  return $("in-agree").checked;
+}
+function setStep(n) {
+  state.step = n;
+  document.querySelectorAll("[data-step]").forEach(el => el.hidden = Number(el.dataset.step) !== n);
+  $("prog").style.transform = `scaleX(${n / 4})`; $("progbar").setAttribute("aria-valuenow", n);
+  renderCta();
+  const f = { 1: "in-name", 2: "in-sid" }[n]; if (f) setTimeout(() => $(f).focus(), 50);
+}
+function sidError(msg) {
+  $("err-sid").textContent = msg; $("in-sid").setAttribute("aria-invalid", msg ? "true" : "false");
+}
+// 2단계: 다음을 누르면 서버에서 이미 신청한 학번인지 확인
+async function checkSidThenNext() {
+  const sid = clean($("in-sid").value);
+  state.busy = true; renderCta();
+  try {
+    const r = await API.call("check", { sid });
+    if (r.ok && r.exists) { sidError("이미 사전신청한 학번이에요. 한 학번당 한 번만 신청할 수 있어요."); return; }
+    if (!r.ok) { sidError("학번을 다시 확인해 주세요. 숫자 8~10자리예요."); return; }
+    setStep(3);
+  } catch (e) {
+    sidError("학번을 확인하지 못했어요. 인터넷 연결을 확인하고 다시 눌러주세요.");
+  } finally { state.busy = false; renderCta(); }
+}
+async function submitApply() {
+  const name = clean($("in-name").value), sid = clean($("in-sid").value);
+  state.busy = true; $("err-apply").textContent = ""; renderCta();
+  try {
+    const r = await API.call("apply", { name, sid, follow: true, consent: true });
+    if (!r.ok) {
+      if (r.reason === "exists") { setStep(2); sidError("이미 사전신청한 학번이에요. 한 학번당 한 번만 신청할 수 있어요."); return; }
+      if (r.reason === "closed") { $("err-apply").textContent = "사전신청 기간이 끝났어요. 11/19 당일 운영부스로 와주세요."; return; }
+      throw new Error(r.reason);
+    }
+    $("doneCode").innerHTML = r.reg.code.split("").map(c => `<b>${c}</b>`).join("");
+    $("doneName").textContent = r.reg.name; $("doneSid").textContent = r.reg.sid;
+    show("done");
+  } catch (e) {
+    $("err-apply").textContent = "저장하지 못했어요. 인터넷 연결을 확인하고 다시 눌러주세요.";
+  } finally { state.busy = false; renderCta(); }
+}
+
+/* ---------- 당일: 혜택 받기 / 내 번호 다시 보기 ---------- */
+const dayCode = () => [0, 1, 2, 3].map(i => $("dc" + i).value).join("");
+function setDayTab(t) {
+  state.dayTab = t;
+  $("tab-get").setAttribute("aria-selected", String(t === "get"));
+  $("tab-find").setAttribute("aria-selected", String(t === "find"));
+  $("pane-get").hidden = t !== "get"; $("pane-find").hidden = t !== "find";
+  renderCta();
+}
+async function submitDay() {
+  $("err-dv").textContent = ""; state.busy = true; renderCta();
+  try {
+    const r = await API.call("verify", { sid: clean($("dv-sid").value), code: dayCode() });
+    if (!r.ok) { $("err-dv").textContent = "학번 또는 번호가 맞지 않아요. 번호를 잊었다면 '내 번호 다시 보기'를 눌러주세요."; return; }
+    state.left = r.left; openTicket(r.reg);
+  } catch (e) { $("err-dv").textContent = "확인하지 못했어요. 다시 눌러주세요."; }
+  finally { state.busy = false; renderCta(); }
+}
+async function submitFind() {
+  $("err-lk").textContent = ""; state.busy = true; renderCta();
+  try {
+    const r = await API.call("lookup", { name: clean($("lk-name").value), sid: clean($("lk-sid").value) });
+    if (!r.ok) { $("err-lk").textContent = "일치하는 신청이 없어요. 이름과 학번을 다시 확인해 주세요. 신청하지 않았다면 운영부스로 와주세요."; return; }
+    state.found = r.reg;
+    $("fdName").textContent = `${r.reg.name} 님의 4자리 번호`;
+    $("fdCode").innerHTML = r.reg.code.split("").map(c => `<b>${c}</b>`).join("");
+    $("findForm").hidden = true; $("findResult").hidden = false;
+  } catch (e) { $("err-lk").textContent = "불러오지 못했어요. 다시 눌러주세요."; }
+  finally { state.busy = false; renderCta(); }
+}
+function useFound() {
+  const reg = state.found;
+  $("dv-sid").value = reg.sid; reg.code.split("").forEach((c, i) => $("dc" + i).value = c);
+  resetFind(); setDayTab("get");
+}
+function resetFind() {
+  state.found = null; $("findForm").hidden = false; $("findResult").hidden = true; renderCta();
+}
+
+/* ---------- 티켓 ---------- */
+function openTicket(reg) {
+  state.ticket = reg; const used = reg.redeemed;
+  $("ticket").classList.toggle("used", used);
+  $("tkName").textContent = reg.name + " 님";
+  $("tkSid").textContent = reg.sid.slice(0, 4) + "****";
+  $("tkStamp").innerHTML = used ? "지급 완료" : '<span class="pulse"></span>사전신청 확인';
+  $("tkTitle").innerHTML = used ? "혜택을 받았어요" : "운영부스에서<br>이 화면을 보여주세요";
+  $("tkSub").textContent = used ? "즐거운 SSP 되세요!" : "운영진이 확인하면 혜택을 드려요.";
+  $("tkBenLabel").textContent = used ? "받은 혜택" : "받을 혜택";
+  $("tkBen").textContent = used ? BEN[reg.benefit] : (state.left > 0 ? `커피쿠폰 (남은 ${state.left}장)` : "럭키드로우 1회 추가");
+  show("ticket");
+}
+
+/* ---------- 운영진 지급 (참여자 휴대폰에서) ---------- */
+let lastFocus = null;
+function openSheet() {
+  lastFocus = document.activeElement;
+  state.pick = null; $("sh-pin").value = ""; $("err-sh").textContent = "";
+  const soldout = !(state.left > 0);
+  $("shLeft").textContent = soldout ? "다 나갔어요" : `남은 ${state.left}장`;
+  document.querySelectorAll(".opt").forEach(o => { o.setAttribute("aria-pressed", "false"); o.disabled = o.dataset.b === "coffee" ? soldout : !soldout; });
+  state.pick = soldout ? "lucky" : "coffee";
+  document.querySelector(`.opt[data-b="${state.pick}"]`).setAttribute("aria-pressed", "true");
+  $("sheet").hidden = false; sheetValid(); setTimeout(() => $("sh-pin").focus(), 50);
+}
+function closeSheet() { $("sheet").hidden = true; if (lastFocus) lastFocus.focus(); }
+function sheetValid() { $("shOk").disabled = !($("sh-pin").value.length >= 4 && state.pick); }
+async function confirmRedeem() {
+  $("shOk").disabled = true; $("err-sh").textContent = "";
+  try {
+    const t = state.ticket;
+    const r = await API.call("redeem", { sid: t.sid, code: t.code, pin: $("sh-pin").value, benefit: state.pick });
+    if (!r.ok) {
+      const msg = { pin: "PIN이 맞지 않아요. 다시 넣어주세요.", used: "이미 혜택을 받은 사람이에요.", soldout: "방금 커피쿠폰이 다 나갔어요. 럭키드로우 1회 추가로 지급해 주세요.", not_found: "신청 정보를 찾지 못했어요." }[r.reason] || "처리하지 못했어요. 다시 눌러주세요.";
+      if (r.reason === "soldout") { state.left = 0; openSheet(); }
+      if (r.reason === "used" && r.reg) { closeSheet(); openTicket(r.reg); }
+      $("err-sh").textContent = msg; sheetValid(); return;
+    }
+    closeSheet(); state.left = r.left; openTicket(r.reg); toast(BEN[r.reg.benefit] + " 지급 완료");
+  } catch (e) { $("err-sh").textContent = "처리하지 못했어요. 다시 눌러주세요."; sheetValid(); }
+}
+
+/* ---------- 공통 ---------- */
+let tt; function toast(m) { const t = $("toast"); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 2200); }
+function tick() {
+  let ms = Math.max(0, EVENT_START - new Date());
+  const d = Math.floor(ms / 864e5); ms -= d * 864e5; const h = Math.floor(ms / 36e5); ms -= h * 36e5; const m = Math.floor(ms / 6e4); const s = Math.floor((ms - m * 6e4) / 1e3);
+  $("cd-d").textContent = d; $("cd-h").textContent = String(h).padStart(2, "0"); $("cd-m").textContent = String(m).padStart(2, "0"); $("cd-s").textContent = String(s).padStart(2, "0");
+}
+async function refreshConfig() {
+  try {
+    const c = await API.call("config");
+    if (!c.ok) return;
+    state.left = c.left; $("dayLeft").textContent = c.left > 0 ? `${c.left}장` : "다 나갔어요 (럭키드로우 1회 추가)";
+    if (c.mode !== state.mode) { state.mode = c.mode; if (isHome() || !state.screen) home(); }
+  } catch (e) {}
+}
+
+function bind() {
+  $("btnMain").addEventListener("click", () => {
+    if (state.busy) return;
+    switch (state.screen) {
+      case "home-pre": show("apply"); setStep(1); break;
+      case "apply": if (state.step === 2) checkSidThenNext(); else if (state.step < 4) setStep(state.step + 1); else submitApply(); break;
+      case "done": home(); break;
+      case "home-day": state.dayTab === "get" ? submitDay() : (state.found ? useFound() : submitFind()); break;
+      case "ticket": state.ticket.redeemed ? home() : openSheet(); break;
+    }
+  });
+  $("btnSub").addEventListener("click", resetFind);
+  $("back").addEventListener("click", () => { if (state.screen === "apply" && state.step > 1) return setStep(state.step - 1); home(); });
+  ["in-name", "in-follow", "in-agree", "lk-name", "dv-sid", "lk-sid"].forEach(id => $(id).addEventListener("input", renderCta));
+  $("in-sid").addEventListener("input", () => { sidError(""); renderCta(); });
+  ["in-sid", "lk-sid", "dv-sid"].forEach(id => $(id).addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, ""); renderCta(); }));
+  ["in-name", "in-sid", "lk-name", "lk-sid", "dv-sid"].forEach(id => $(id).addEventListener("keydown", e => { if (e.key === "Enter" && !$("btnMain").disabled) $("btnMain").click(); }));
+  [0, 1, 2, 3].forEach(i => {
+    const el = $("dc" + i);
+    el.addEventListener("input", () => { el.value = el.value.replace(/\D/g, "").slice(-1); if (el.value && i < 3) $("dc" + (i + 1)).focus(); $("err-dv").textContent = ""; renderCta(); });
+    el.addEventListener("keydown", e => { if (e.key === "Backspace" && !el.value && i > 0) $("dc" + (i - 1)).focus(); if (e.key === "Enter" && !$("btnMain").disabled) $("btnMain").click(); });
+    el.addEventListener("paste", e => { const t = (e.clipboardData.getData("text") || "").replace(/\D/g, "").slice(0, 4); if (t.length) { e.preventDefault(); t.split("").forEach((c, j) => $("dc" + j).value = c); $("dc" + Math.min(3, t.length - 1)).focus(); renderCta(); } });
+  });
+  $("tab-get").addEventListener("click", () => setDayTab("get"));
+  $("tab-find").addEventListener("click", () => setDayTab("find"));
+  document.querySelector(".tabs").addEventListener("keydown", e => { if (e.key === "ArrowRight" || e.key === "ArrowLeft") { const t = state.dayTab === "get" ? "find" : "get"; setDayTab(t); $("tab-" + t).focus(); } });
+  document.querySelectorAll(".opt").forEach(o => o.addEventListener("click", () => { if (o.disabled) return; state.pick = o.dataset.b; document.querySelectorAll(".opt").forEach(x => x.setAttribute("aria-pressed", String(x === o))); sheetValid(); }));
+  $("sh-pin").addEventListener("input", sheetValid);
+  $("sh-pin").addEventListener("keydown", e => { if (e.key === "Enter" && !$("shOk").disabled) confirmRedeem(); });
+  $("shCancel").addEventListener("click", closeSheet);
+  $("sheet").addEventListener("click", e => { if (e.target === $("sheet")) closeSheet(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("sheet").hidden) closeSheet(); });
+  $("shOk").addEventListener("click", confirmRedeem);
+}
+
+async function boot() {
+  bind(); tick(); setInterval(tick, 1000);
+  $("demoBanner").hidden = !API.demo;
+  state.mode = new Date() < API.DAY_START ? "pre" : new Date() < API.DAY_END ? "day" : "post";
+  home();
+  await refreshConfig();
+  setInterval(refreshConfig, 30000);
+}
+boot();
+})();
+</script>
+</body>
+</html>
