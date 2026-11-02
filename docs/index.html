@@ -135,6 +135,17 @@ section{display:flex;flex-direction:column}
     <span class="chip" id="modeChip">사전신청 중</span>
   </header>
 
+  <!-- 불러오는 중 (서버 설정을 받을 때까지) -->
+  <section data-s="loading" hidden>
+    <style>
+      .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:60vh;color:var(--t3);font-size:15px}
+      .spin{width:28px;height:28px;border-radius:50%;border:3px solid var(--bg2);border-top-color:var(--brand-press);animation:spin .8s linear infinite}
+      @keyframes spin{to{transform:rotate(360deg)}}
+      @media (prefers-reduced-motion:reduce){.spin{animation:none;border-top-color:var(--bg2)}}
+    </style>
+    <div class="loading" role="status" aria-live="polite"><div class="spin" aria-hidden="true"></div>불러오는 중…</div>
+  </section>
+
   <!-- 사전신청 기간 홈 -->
   <section data-s="home-pre" hidden>
     <h1>사과대 8개 전공,<br>궁금한 건 다 물어보는 날</h1>
@@ -527,9 +538,22 @@ function bind() {
 async function boot() {
   bind(); tick(); setInterval(tick, 1000);
   $("demoBanner").hidden = !API.demo;
-  state.mode = new Date() < API.DAY_START ? "pre" : new Date() < API.DAY_END ? "day" : "post";
+  $("modeChip").hidden = true;
+  show("loading");
+  // 서버 설정(운영진이 고른 화면)을 받을 때까지 '불러오는 중'을 보여줘요.
+  // 5초가 넘게 걸리면 휴대폰 날짜로 화면을 정하고, 나중에 설정이 오면 다시 맞춰요.
+  const byDate = new Date() < API.DAY_START ? "pre" : new Date() < API.DAY_END ? "day" : "post";
+  let c = null;
+  try { c = await Promise.race([API.call("config"), new Promise(r => setTimeout(() => r(null), 5000))]); } catch (e) {}
+  if (c && c.ok) {
+    state.mode = c.mode; state.left = c.left;
+    $("dayLeft").textContent = c.left > 0 ? `${c.left}장` : "다 나갔어요 (럭키드로우 1회 추가)";
+  } else {
+    state.mode = byDate;
+  }
   home();
-  await refreshConfig();
+  $("modeChip").hidden = false;
+  if (!(c && c.ok)) refreshConfig();
   setInterval(refreshConfig, 30000);
 }
 boot();
