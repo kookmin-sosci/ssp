@@ -98,6 +98,10 @@ section{display:flex;flex-direction:column}
 /* bottom buttons */
 .cta{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(to top,var(--bg) 72%,transparent);padding:20px 20px calc(16px + env(safe-area-inset-bottom,0px));z-index:5}
 .cta .in{max-width:440px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.cta{pointer-events:none}.cta .in{pointer-events:auto}
+/* 키보드가 올라와 있을 때: 아래 고정 버튼이 입력칸을 덮지 않게 내용 바로 아래로 */
+body.kb .app{min-height:0;padding-bottom:16px}
+body.kb .cta{position:static;background:none;padding:4px 20px 24px}
 .btn{appearance:none;border:0;border-radius:16px;font:inherit;font-weight:700;font-size:17px;padding:17px 16px;width:100%;cursor:pointer;transition:transform .08s ease-out,background-color .15s}
 .btn:active{transform:scale(.98)}
 .btn.primary{background:var(--brand);color:var(--on-brand)}
@@ -183,7 +187,7 @@ section{display:flex;flex-direction:column}
     <div data-step="1">
       <h1>이름을 알려주세요</h1>
       <p class="sub">당일 혜택 받을 때 본인 확인에 써요.</p>
-      <div class="field"><label for="in-name">이름</label><input id="in-name" autocomplete="name" placeholder="홍길동" maxlength="20"></div>
+      <div class="field"><label for="in-name">이름</label><input id="in-name" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" placeholder="홍길동"></div>
     </div>
     <div data-step="2" hidden>
       <h1>학번을 알려주세요</h1>
@@ -243,7 +247,7 @@ section{display:flex;flex-direction:column}
     <div id="pane-find" role="tabpanel" aria-labelledby="tab-find" hidden>
       <p class="sub" style="margin-top:-8px">신청할 때 쓴 이름과 학번을 넣으면 번호를 다시 보여드려요.</p>
       <div id="findForm">
-        <div class="field"><label for="lk-name">이름</label><input id="lk-name" autocomplete="name" placeholder="홍길동" maxlength="20"></div>
+        <div class="field"><label for="lk-name">이름</label><input id="lk-name" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="next" placeholder="홍길동"></div>
         <div class="field"><label for="lk-sid">학번</label><input id="lk-sid" inputmode="numeric" autocomplete="off" placeholder="20261234" maxlength="10"></div>
         <p class="err" id="err-lk" role="alert"></p>
       </div>
@@ -385,7 +389,7 @@ async function checkSidThenNext() {
   } finally { state.busy = false; renderCta(); }
 }
 async function submitApply() {
-  const name = clean($("in-name").value), sid = clean($("in-sid").value);
+  const name = clean($("in-name").value).slice(0, 20), sid = clean($("in-sid").value);
   state.busy = true; $("err-apply").textContent = ""; renderCta();
   try {
     const r = await API.call("apply", { name, sid, follow: true, consent: true });
@@ -501,6 +505,13 @@ async function refreshConfig() {
 }
 
 function bind() {
+  // 안드로이드(삼성 인터넷 등)는 키보드가 올라오면 화면 높이가 줄어, 아래 고정 버튼이 입력칸을 덮을 수 있어요.
+  // 입력하는 동안에는 버튼을 고정하지 않고 내용 바로 아래에 두고, 입력칸을 화면 가운데로 올려요.
+  const typing = el => el && el.matches && el.matches("input:not([type=checkbox])");
+  document.addEventListener("focusin", e => { if (!typing(e.target)) return; document.body.classList.add("kb"); setTimeout(() => e.target.scrollIntoView({ block: "center" }), 300); });
+  document.addEventListener("focusout", () => setTimeout(() => { if (!typing(document.activeElement)) document.body.classList.remove("kb"); }, 400));
+  // 한글 조합이 끝났을 때도 버튼 상태를 다시 계산 (일부 삼성 키보드는 마지막 글자에서 input 이벤트를 늦게 보냄)
+  ["in-name", "lk-name"].forEach(id => $(id).addEventListener("compositionend", renderCta));
   $("btnMain").addEventListener("click", () => {
     if (state.busy) return;
     switch (state.screen) {
